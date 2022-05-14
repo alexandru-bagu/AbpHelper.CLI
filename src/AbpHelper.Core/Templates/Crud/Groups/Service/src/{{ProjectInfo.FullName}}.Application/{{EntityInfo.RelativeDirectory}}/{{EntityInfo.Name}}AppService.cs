@@ -19,7 +19,7 @@ else
 using System.Linq;
 using System.Threading.Tasks;
 {{~ end -}}
-{{~ if !Option.SkipPermissions 
+{{~ if !Option.SkipPermissions
     permissionNamesPrefix = ProjectInfo.Name + "Permissions." + EntityInfo.Name
 ~}}
 using {{ ProjectInfo.FullName }}.Permissions;
@@ -46,7 +46,7 @@ namespace {{ EntityInfo.Namespace }}
 
         {{~ if !Option.SkipCustomRepository ~}}
         private readonly {{ repositoryType }} {{ repositoryName }};
-        
+
         public {{ EntityInfo.Name }}AppService({{ repositoryType }} repository) : base(repository)
         {
             {{ repositoryName }} = repository;
@@ -57,7 +57,7 @@ namespace {{ EntityInfo.Namespace }}
         }
         {{~ end ~}}
         {{~ if EntityInfo.CompositeKeyName ~}}
-        
+
         protected override Task DeleteByIdAsync({{ EntityInfo.CompositeKeyName }} id)
         {
             // TODO: AbpHelper generated
@@ -76,8 +76,7 @@ namespace {{ EntityInfo.Namespace }}
                 {{~ for prop in EntityInfo.CompositeKeys ~}}
                     e.{{ prop.Name }} == id.{{ prop.Name}}{{ if !for.last}} &&{{end}}
                 {{~ end ~}}
-                )
-            ); 
+                );
         }
 
         protected override IQueryable<{{ EntityInfo.Name }}> ApplyDefaultSorting(IQueryable<{{ EntityInfo.Name }}> query)
@@ -85,6 +84,6 @@ namespace {{ EntityInfo.Namespace }}
             // TODO: AbpHelper generated
             return query.OrderBy(e => e.{{ EntityInfo.CompositeKeys[0].Name }});
         }
-        {{~ end ~}} 
+        {{~ end ~}}
     }
 }
