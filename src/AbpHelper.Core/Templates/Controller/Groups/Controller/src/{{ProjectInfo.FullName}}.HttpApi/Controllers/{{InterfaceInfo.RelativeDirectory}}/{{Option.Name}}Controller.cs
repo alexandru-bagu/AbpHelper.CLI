@@ -5,13 +5,13 @@ using {{ using }};
 {{~ end ~}}
 using System.Threading.Tasks;
 {{~ if ProjectInfo.TemplateType == 'Application' ~}}
-using {{ ProjectInfo.FullName }}.Controllers;
+using {{ ProjectInfo.FullName }}.{{ InterfaceInfo.RelativeNamespace }};
 {{~ end ~}}
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp;
-using Volo.Abp.Application.Dtos;
+using Volo.Abp.AspNetCore.Mvc;
 
-namespace {{ ProjectInfo.FullName }}.{{ InterfaceInfo.RelativeNamespace }}
+namespace {{ ProjectInfo.FullName }}.Controllers.{{ InterfaceInfo.RelativeNamespace }}
 {
     {{~ for attribute in ClassInfo.Attributes ~}}
     {{~ if attribute | string.starts_with "[RemoteService"; defined_remote_service = attribute; end ~}}
@@ -21,12 +21,14 @@ namespace {{ ProjectInfo.FullName }}.{{ InterfaceInfo.RelativeNamespace }}
     {{~ else ~}}
     [RemoteService(Name = "{{ ProjectInfo.Name }}{{ Option.Name }}")]
     {{~ end ~}}
+    [Area("app")]
+    [ControllerName("{{ Option.Name }}")]
     {{~ if ProjectInfo.TemplateType == 'Application' ~}}
     [Route("/api/app/{{ Option.Name | abp.camel_case }}")]
     {{~ else if ProjectInfo.TemplateType == 'Module' ~}}
     [Route("/api/{{ ProjectInfo.Name | abp.camel_case }}/{{ Option.Name | abp.camel_case }}")]
     {{~ end ~}}
-    public class {{ Option.Name }}Controller : {{ ProjectInfo.Name }}Controller, I{{ Option.Name }}AppService
+    public class {{ Option.Name }}Controller : AbpController, I{{ Option.Name }}AppService
     {
         private readonly I{{ Option.Name }}AppService _service;
 

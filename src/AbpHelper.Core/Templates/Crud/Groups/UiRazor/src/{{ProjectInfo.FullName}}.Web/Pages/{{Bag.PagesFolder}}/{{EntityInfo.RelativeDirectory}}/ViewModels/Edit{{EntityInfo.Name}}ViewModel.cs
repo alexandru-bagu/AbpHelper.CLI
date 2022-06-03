@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 {{ end ~}}
 {{~ if Bag.PagesFolder; pagesNamespace = Bag.PagesFolder + "."; end ~}}
 
-namespace {{ ProjectInfo.FullName }}.Web.Pages.{{ pagesNamespace }}{{ EntityInfo.RelativeNamespace}}.{{ EntityInfo.Name }}.ViewModels
+namespace {{ ProjectInfo.FullName }}.Web.Pages.{{ pagesNamespace }}{{ EntityInfo.RelativeNamespace}}.ViewModels
 {
     public class Edit{{ EntityInfo.Name }}ViewModel
     {

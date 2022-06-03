@@ -27,13 +27,19 @@ using {{ ProjectInfo.FullName }}.Permissions;
 using {{ EntityInfo.Namespace }}.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Volo.Abp;
 {{~ if Option.SkipCustomRepository ~}}
 using Volo.Abp.Domain.Repositories;
 {{~ end ~}}
 
 namespace {{ EntityInfo.Namespace }}
 {
-    public class {{ EntityInfo.Name }}AppService : {{ crudClassName }}<{{ EntityInfo.Name }}, {{ DtoInfo.ReadTypeName }}, {{ EntityInfo.PrimaryKey ?? EntityInfo.CompositeKeyName }}, PagedAndSortedResultRequestDto, {{ DtoInfo.CreateTypeName }}, {{ DtoInfo.UpdateTypeName }}>,
+    [RemoteService(IsEnabled = false)]
+    public class {{ EntityInfo.Name }}AppService : {{ crudClassName }}<{{ EntityInfo.Name }}, {{ DtoInfo.ReadTypeName }}, {{ EntityInfo.PrimaryKey ?? EntityInfo.CompositeKeyName }}, Get{{EntityInfo.Name}}InputRequestDto, {{ DtoInfo.CreateTypeName }}, {{ DtoInfo.UpdateTypeName }}>,
         I{{ EntityInfo.Name }}AppService
     {
         {{~ if !Option.SkipPermissions ~}}
@@ -85,6 +91,21 @@ namespace {{ EntityInfo.Namespace }}
             // TODO: AbpHelper generated
             return query.OrderBy(e => e.{{ EntityInfo.CompositeKeys[0].Name }});
         }
-        {{~ end ~}} 
+        {{~ end ~}}
+
+        [Authorize]
+        public async Task<PagedResultDto<LookupDto<Guid>>> GetLookupAsync(Get{{EntityInfo.Name}}LookupRequestDto input)
+        {
+            var query = await CreateFilteredQueryAsync(input);
+            var count = await query.CountAsync();
+            query = ApplySorting(query, input);
+            query = ApplyPaging(query, input);
+            var results = await query.ToListAsync();
+            return new PagedResultDto<LookupDto<Guid>>()
+            {
+                TotalCount = count,
+                Items = ObjectMapper.Map<List<{{ EntityInfo.Name }}>, List<LookupDto<Guid>>>(results)
+            };
+        }
     }
 }

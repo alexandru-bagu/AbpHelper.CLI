@@ -4,7 +4,7 @@
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal;
 @inject IHtmlLocalizer<{{ ProjectInfo.Name }}Resource> L
 {{~ if Bag.PagesFolder; pagesNamespace = Bag.PagesFolder + "."; end ~}}
-@model {{ ProjectInfo.FullName }}.Web.Pages.{{ pagesNamespace }}{{ EntityInfo.RelativeNamespace }}.{{ EntityInfo.Name }}.EditModalModel
+@model {{ ProjectInfo.FullName }}.Web.Pages.{{ pagesNamespace }}{{ EntityInfo.RelativeNamespace }}.EditModalModel
 @{
     Layout = null;
 }

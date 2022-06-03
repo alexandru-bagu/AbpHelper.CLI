@@ -105,7 +105,8 @@ namespace EasyAbp.AbpHelper.Core.Workflow.Common
                                             .Then<FileFinderStep>(
                                                 step =>
                                                 {
-                                                    step.SearchFileName = new LiteralExpression("*.Web.csproj");
+                                                    step.BaseDirectory = new JavaScriptExpression<string>("AspNetCoreDir + '/src'");
+                                                    step.SearchFileName = new LiteralExpression("*.DbMigrator.csproj");
                                                     step.ResultVariableName = new LiteralExpression<string>(StartupProjectFile);
                                                 })
                                             .Then(nextActivityName)

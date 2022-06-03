@@ -4,8 +4,10 @@
         {{~ if defined_http_verb != "" ~}}
         [{{ defined_http_verb }}]
         {{~ end ~}}
-        {{~ if route ~}}
+        {{~ if route ~}}  
+        {{~ if (route | string.size) > 0 ~}}  
         [Route("{{ method | abp.get_route }}")]
+        {{~ end ~}}
         {{~ end ~}}
         {{ method.Accessor }} virtual {{ method.ReturnType }} {{  method.Name }}({{ for param in method.Parameters }}{{ param.Type }} {{ param.Name }}{{if !for.last }}, {{ end }}{{ end }})
         {

@@ -4,7 +4,7 @@
 @using {{ ProjectInfo.FullName }}.Localization
 @inject IHtmlLocalizer<{{ ProjectInfo.Name }}Resource> L
 {{~ if Bag.PagesFolder; pagesNamespace = Bag.PagesFolder + "."; end ~}}
-@model {{ ProjectInfo.FullName }}.Web.Pages.{{ pagesNamespace }}{{ EntityInfo.RelativeNamespace }}.{{ EntityInfo.Name }}.CreateModalModel
+@model {{ ProjectInfo.FullName }}.Web.Pages.{{ pagesNamespace }}{{ EntityInfo.RelativeNamespace }}.CreateModalModel
 @{
     Layout = null;
 }

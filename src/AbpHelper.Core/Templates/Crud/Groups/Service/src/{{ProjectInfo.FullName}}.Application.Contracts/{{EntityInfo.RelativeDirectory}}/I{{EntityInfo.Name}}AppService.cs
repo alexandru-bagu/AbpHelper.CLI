@@ -2,6 +2,7 @@ using System;
 using {{ EntityInfo.Namespace }}.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using System.Threading.Tasks;   
 
 namespace {{ EntityInfo.Namespace }}
 {
@@ -9,10 +10,10 @@ namespace {{ EntityInfo.Namespace }}
         ICrudAppService< 
             {{ DtoInfo.ReadTypeName }}, 
             {{ EntityInfo.PrimaryKey ?? EntityInfo.CompositeKeyName }}, 
-            PagedAndSortedResultRequestDto,
+            Get{{EntityInfo.Name}}InputRequestDto,
             {{ DtoInfo.CreateTypeName }},
             {{ DtoInfo.UpdateTypeName }}>
     {
-
+        Task<PagedResultDto<LookupDto<Guid>>> GetLookupAsync(Get{{EntityInfo.Name}}LookupRequestDto input);
     }
 }

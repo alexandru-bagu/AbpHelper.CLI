@@ -6,7 +6,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Volo.Abp.AspNetCore.Mvc.UI.Layout
-@using {{ ProjectInfo.FullName }}.Web.Pages.{{ pagesNamespace }}{{ EntityInfo.RelativeNamespace }}.{{ EntityInfo.Name }}
+@using {{ ProjectInfo.FullName }}.Web.Pages.{{ pagesNamespace }}{{ EntityInfo.RelativeNamespace }}
 @using {{ ProjectInfo.FullName }}.Localization
 @using {{ ProjectInfo.FullName }}.Web.Menus
 @model IndexModel
@@ -24,21 +24,15 @@
 
 @section scripts
 {
-    <abp-script src="/Pages/{{ pagesFolder }}{{ EntityInfo.RelativeDirectory }}/{{ EntityInfo.Name }}/index.js" />
+    <abp-script src="/Pages/{{ pagesFolder }}{{ EntityInfo.RelativeDirectory }}/index.js" />
 }
 @section styles
 {
-    <abp-style src="/Pages/{{ pagesFolder }}{{ EntityInfo.RelativeDirectory }}/{{ EntityInfo.Name }}/index.css"/>
+    <abp-style src="/Pages/{{ pagesFolder }}{{ EntityInfo.RelativeDirectory }}/index.css"/>
 }
-
-<abp-card>
-    <abp-card-header>
-        <abp-row>
-            <abp-column size-md="_6">
-                <abp-card-title>@L["{{ EntityInfo.Name }}"]</abp-card-title>
-            </abp-column>
-            <abp-column size-md="_6" class="text-end">
-{{~ if !Option.SkipPermissions ~}}
+@section content_toolbar 
+{
+  {{~ if !Option.SkipPermissions ~}}
 			    @if (await Authorization.IsGrantedAsync({{ ProjectInfo.Name }}Permissions.{{ EntityInfo.Name }}.Create))
                 {
 {{~ end ~}}
@@ -49,10 +43,10 @@
 {{~ if !Option.SkipPermissions ~}}
                 }
  {{~ end ~}}
-            </abp-column>
-        </abp-row>
-    </abp-card-header>
+}
+
+<abp-card>
     <abp-card-body>
-        <abp-table striped-rows="true" id="{{ EntityInfo.Name }}Table" class="nowrap"/>
+        <abp-table striped-rows="true" id="{{ EntityInfo.Name }}Table" class="nowrap"></abp-table>
     </abp-card-body>
 </abp-card>

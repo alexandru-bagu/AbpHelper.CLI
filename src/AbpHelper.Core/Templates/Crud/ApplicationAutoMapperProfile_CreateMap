@@ -1,4 +1,5 @@
             CreateMap<{{ EntityInfo.Name }}, {{ DtoInfo.ReadTypeName }}>();
+            CreateMap<{{ EntityInfo.Name }}, LookupDto<Guid>>();
             CreateMap<{{ DtoInfo.CreateTypeName }}, {{ EntityInfo.Name }}>(MemberList.Source);
 {{~ if DtoInfo.CreateTypeName != DtoInfo.UpdateTypeName ~}}            
             CreateMap<{{ DtoInfo.UpdateTypeName }}, {{ EntityInfo.Name }}>(MemberList.Source);

@@ -16,10 +16,10 @@ using {{ EntityInfo.Namespace }};
 using {{ EntityInfo.Namespace }}.Dtos;
 {{~ if Bag.PagesFolder; pagesNamespace = Bag.PagesFolder + "."; end ~}}
 {{~ if !Option.SkipViewModel ~}}
-using {{ ProjectInfo.FullName }}.Web.Pages.{{ pagesNamespace }}{{ EntityInfo.RelativeNamespace}}.{{ EntityInfo.Name }}.ViewModels;
+using {{ ProjectInfo.FullName }}.Web.Pages.{{ pagesNamespace }}{{ EntityInfo.RelativeNamespace}}.ViewModels;
 {{~ end ~}}
 
-namespace {{ ProjectInfo.FullName }}.Web.Pages.{{ pagesNamespace }}{{ EntityInfo.RelativeNamespace}}.{{ EntityInfo.Name }}
+namespace {{ ProjectInfo.FullName }}.Web.Pages.{{ pagesNamespace }}{{ EntityInfo.RelativeNamespace}}
 {
     public class CreateModalModel : {{ ProjectInfo.Name }}PageModel
     {

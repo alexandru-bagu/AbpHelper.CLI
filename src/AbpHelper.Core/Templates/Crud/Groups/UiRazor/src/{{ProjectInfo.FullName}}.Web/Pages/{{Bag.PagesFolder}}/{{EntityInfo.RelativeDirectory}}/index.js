@@ -3,9 +3,9 @@ $(function () {
 
     var l = abp.localization.getResource('{{ ProjectInfo.Name }}');
 
-    var service = {{ EntityInfo.Namespace + '.' + EntityInfo.Name | abp.camel_case }};
-    var createModal = new abp.ModalManager(abp.appPath + '{{ pagesFolder }}{{ EntityInfo.RelativeDirectory }}/{{ EntityInfo.Name }}/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + '{{ pagesFolder }}{{ EntityInfo.RelativeDirectory }}/{{ EntityInfo.Name }}/EditModal');
+    var service = {{ ProjectInfo.FullName + '.Controllers.' + EntityInfo.RelativeDirectory + '.' + EntityInfo.Name | abp.camel_case }};
+    var createModal = new abp.ModalManager(abp.appPath + '{{ pagesFolder }}{{ EntityInfo.RelativeDirectory }}/CreateModal');
+    var editModal = new abp.ModalManager(abp.appPath + '{{ pagesFolder }}{{ EntityInfo.RelativeDirectory }}/EditModal');
 
     var dataTable = $('#{{ EntityInfo.Name }}Table').DataTable(abp.libs.datatables.normalizeConfiguration({
         processing: true,
