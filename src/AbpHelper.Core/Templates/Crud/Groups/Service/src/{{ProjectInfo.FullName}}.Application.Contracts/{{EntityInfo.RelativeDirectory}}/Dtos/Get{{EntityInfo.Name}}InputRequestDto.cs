@@ -4,11 +4,8 @@ using Volo.Abp.Application.Dtos;
 namespace {{ EntityInfo.Namespace }}.Dtos
 {
     [Serializable]
-    public class Get{{EntityInfo.Name}}LookupRequestDto : Get{{EntityInfo.Name}}InputRequestDto 
+    public class Get{{EntityInfo.Name}}InputRequestDto : PagedAndSortedResultRequestDto
     {
-        public Get{{EntityInfo.Name}}LookupRequestDto()
-        { 
-            MaxResultCount = MaxMaxResultCount;
-        }
+        public string Filter { get; set; }
     }
 }

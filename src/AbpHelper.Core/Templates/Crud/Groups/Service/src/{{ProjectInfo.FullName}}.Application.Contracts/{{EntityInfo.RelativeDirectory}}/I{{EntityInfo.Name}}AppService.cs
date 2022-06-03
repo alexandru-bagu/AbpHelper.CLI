@@ -15,5 +15,7 @@ namespace {{ EntityInfo.Namespace }}
             {{ DtoInfo.UpdateTypeName }}>
     {
         Task<PagedResultDto<LookupDto<Guid>>> GetLookupAsync(Get{{EntityInfo.Name}}LookupRequestDto input);
+
+        Task<PagedResultDto<{{ EntityInfo.Name }}WithNavigationDto>> GetListWithNavigationAsync(Get{{ EntityInfo.Name }}InputRequestDto input);
     }
 }

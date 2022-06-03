@@ -17,16 +17,16 @@ namespace {{ ProjectInfo.FullName }}.Controllers.{{ InterfaceInfo.RelativeNamesp
     {{~ if attribute | string.starts_with "[RemoteService"; defined_remote_service = attribute; end ~}}
     {{~ end ~}}
     {{~ if defined_remote_service ~}}
-    {{ defined_remote_service }}
+    [RemoteService]
     {{~ else ~}}
     [RemoteService(Name = "{{ ProjectInfo.Name }}{{ Option.Name }}")]
     {{~ end ~}}
     [Area("app")]
     [ControllerName("{{ Option.Name }}")]
     {{~ if ProjectInfo.TemplateType == 'Application' ~}}
-    [Route("/api/app/{{ Option.Name | abp.camel_case }}")]
+    [Route("/api/app/{{ Option.Name | abp.kebab_case }}")]
     {{~ else if ProjectInfo.TemplateType == 'Module' ~}}
-    [Route("/api/{{ ProjectInfo.Name | abp.camel_case }}/{{ Option.Name | abp.camel_case }}")]
+    [Route("/api/{{ ProjectInfo.Name | abp.kebab_case }}/{{ Option.Name | abp.kebab_case }}")]
     {{~ end ~}}
     public class {{ Option.Name }}Controller : AbpController, I{{ Option.Name }}AppService
     {

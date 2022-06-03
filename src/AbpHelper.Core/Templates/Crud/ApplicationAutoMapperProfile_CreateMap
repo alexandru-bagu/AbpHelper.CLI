@@ -4,3 +4,4 @@
 {{~ if DtoInfo.CreateTypeName != DtoInfo.UpdateTypeName ~}}            
             CreateMap<{{ DtoInfo.UpdateTypeName }}, {{ EntityInfo.Name }}>(MemberList.Source);
 {{~ end ~}}
+            CreateMap<{{ EntityInfo.Name }}WithNavigation, {{ EntityInfo.Name }}WithNavigationDto>();

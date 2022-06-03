@@ -35,6 +35,7 @@ using Volo.Abp;
 {{~ if Option.SkipCustomRepository ~}}
 using Volo.Abp.Domain.Repositories;
 {{~ end ~}}
+using System.Linq;  
 
 namespace {{ EntityInfo.Namespace }}
 {
@@ -93,6 +94,13 @@ namespace {{ EntityInfo.Namespace }}
         }
         {{~ end ~}}
 
+        protected override async Task<IQueryable<{{ EntityInfo.Name }}>> CreateFilteredQueryAsync(Get{{ EntityInfo.Name }}InputRequestDto input)
+        {
+            var query = await _repository.GetNavigationQueryableAsync();
+            query = _repository.ApplyFilters(query, input.Filter);
+            return query.Select(p => p.{{ EntityInfo.Name }});
+        }
+
         [Authorize]
         public async Task<PagedResultDto<LookupDto<Guid>>> GetLookupAsync(Get{{EntityInfo.Name}}LookupRequestDto input)
         {
@@ -105,6 +113,18 @@ namespace {{ EntityInfo.Namespace }}
             {
                 TotalCount = count,
                 Items = ObjectMapper.Map<List<{{ EntityInfo.Name }}>, List<LookupDto<Guid>>>(results)
+            };
+        }
+
+        [Authorize({{ permissionNamesPrefix }}.Default)]
+        public async Task<PagedResultDto<{{ EntityInfo.Name }}WithNavigationDto>> GetListWithNavigationAsync(Get{{ EntityInfo.Name }}InputRequestDto input)
+        {
+            var count = await _repository.GetNavigationCountAsync(input.Filter);
+            var results = await _repository.GetNavigationListAsync(input.Filter, input.Sorting, input.SkipCount, input.MaxResultCount);
+            return new PagedResultDto<{{ EntityInfo.Name }}WithNavigationDto>()
+            {
+                TotalCount = count,
+                Items = ObjectMapper.Map<List<{{ EntityInfo.Name }}WithNavigation>, List<{{ EntityInfo.Name }}WithNavigationDto>>(results)
             };
         }
     }

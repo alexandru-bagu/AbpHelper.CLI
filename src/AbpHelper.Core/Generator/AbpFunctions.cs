@@ -20,6 +20,13 @@ namespace EasyAbp.AbpHelper.Core.Generator
             return string.Join('.', parts);
         }
 
+        public static string KebabCase(string text)
+        {
+            var parts = text.Split('.')
+                .Select(part => part.ToKebabCase());
+            return string.Join('.', parts);
+        }
+
         public static bool IsIgnoreProperty(PropertyInfo propertyInfo)
         {
             if (propertyInfo.Type == "Guid?" && propertyInfo.Name == "TenantId") return true;
