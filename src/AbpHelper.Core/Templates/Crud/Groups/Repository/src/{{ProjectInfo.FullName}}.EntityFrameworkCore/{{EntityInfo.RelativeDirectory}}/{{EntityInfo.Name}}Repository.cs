@@ -39,14 +39,14 @@ namespace {{ EntityInfo.Namespace }}
 
         public async Task<List<{{ EntityInfo.Name }}WithNavigation>> GetNavigationListAsync(string filter = null, string sorting = null, int? skipCount = null, int? maxResultCount = null)
         {
-            var query = await GetPreparedNavigationQueryableAsync(filter, skipCount, maxResultCount, sorting);
+            var query = await GetPreparedNavigationQueryableAsync(filter, sorting, skipCount, maxResultCount);
             return await query.ToListAsync();
         }
 
         public async Task<IQueryable<{{ EntityInfo.Name }}WithNavigation>> GetPreparedNavigationQueryableAsync(string filter = null, string sorting = null, int? skipCount = null, int? maxResultCount = null)
         {
             var query = await GetNavigationQueryableAsync();
-            query = ApplyFilters(query, filter, networkId);
+            query = ApplyFilters(query, filter);
             query = ApplySorting(query, sorting);
             query = ApplyPaging(query, skipCount, maxResultCount);
             return query;
