@@ -17,6 +17,7 @@ using Elsa.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Volo.Abp;
 
 namespace EasyAbp.AbpHelper.Core.Commands
 {
@@ -110,6 +111,7 @@ namespace EasyAbp.AbpHelper.Core.Commands
             else
             {
                 Logger.LogError("Error activity: " + ctx.CurrentActivity.State);
+                throw new UserFriendlyException(String.Format("[{0}] {1}", ctx.Workflow.Status, ctx.CurrentLogEntry.Message));
             }
         }
 
